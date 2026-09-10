@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吐槽网-热门趣事与网络热点吐槽聚集地</title>
+    <meta name="description" content="吐槽网是一个轻松有趣的网络吐槽社区,汇集全网热门事件、搞笑段子、生活趣事和犀利点评。每天更新新鲜话题,让你在忙碌之余轻松一笑,发现生活乐趣。">
+    <meta name="keywords" content="吐槽网,吐槽,段子,搞笑,趣事,网络热点,神评论,日常吐槽">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f7f5f2;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* 顶部导航 */
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 26px;
+            font-weight: 800;
+            color: #ff6b35;
+            letter-spacing: -1px;
+        }
+        .logo-icon {
+            font-size: 28px;
+            margin-right: 6px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: #ff6b35;
+        }
+        .nav-links .nav-active {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+        /* 首屏 hero */
+        .hero {
+            background: linear-gradient(120deg, #fff8f0 0%, #ffe8d6 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid #f0e4d8;
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #2b2b2b;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        .hero h1 span {
+            color: #ff6b35;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: #ff6b35;
+            border: none;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background: #e85a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,107,53,0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff6b35;
+            color: #ff6b35;
+            padding: 10px 26px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-outline:hover {
+            background: #ff6b35;
+            color: #fff;
+        }
+        /* 热门标签 */
+        .hot-tags {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+        .hot-tag {
+            background: #fff;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #eee;
+        }
+        .hot-tag:hover {
+            border-color: #ff6b35;
+            color: #ff6b35;
+        }
+        /* 主要内容区 */
+        .main-content {
+            padding: 40px 0;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .section-title h2 {
+            font-size: 24px;
+            font-weight: 700;
+            position: relative;
+            padding-left: 16px;
+        }
+        .section-title h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 4px;
+            background: #ff6b35;
+            border-radius: 2px;
+        }
+        .section-title .more-link {
+            margin-left: auto;
+            font-size: 14px;
+            color: #999;
+            text-decoration: none;
+        }
+        .section-title .more-link:hover {
+            color: #ff6b35;
+        }
+        /* 吐槽卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .card-img {
+            height: 200px;
+            background: linear-gradient(135deg, #ffe8d6, #ffd3b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .card-img.alt1 {
+            background: linear-gradient(135deg, #e8f4fd, #d1ecf9);
+        }
+        .card-img.alt2 {
+            background: linear-gradient(135deg, #e6f9e9, #c8f0cf);
+        }
+        .card-img.alt3 {
+            background: linear-gradient(135deg, #f3e8fd, #e4d5f5);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-tag {
+            display: inline-block;
+            background: #fff3e9;
+            color: #ff6b35;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .card-tag.green {
+            background: #e9f9ec;
+            color: #2a9d4f;
+        }
+        .card-tag.blue {
+            background: #e8f1fd;
+            color: #3b7dd8;
+        }
+        .card-tag.purple {
+            background: #f0e9fa;
+            color: #8b5fbf;
+        }
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2b2b2b;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .card p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #aaa;
+            border-top: 1px solid #f5f5f5;
+            padding-top: 12px;
+        }
+        .card-meta .likes {
+            color: #ff6b35;
+        }
+        /* 分类区域 */
+        .category-section {
+            padding: 30px 0;
+        }
+        .category-nav {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .category-item {
+            padding: 8px 20px;
+            background: #fff;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #eee;
+            transition: all 0.2s;
+        }
+        .category-item:hover {
+            background: #ff6b35;
+            color: #fff;
+            border-color: #ff6b35;
+        }
+        .category-item.active {
+            background: #ff6b35;
+            color: #fff;
+            border-color: #ff6b35;
+        }
+        /* 排行榜 */
+        .rank-list {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+        }
+        .rank-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px dashed #f0f0f0;
+        }
+        .rank-item:last-child {
+            border-bottom: none;
+        }
+        .rank-num {
+            width: 36px;
+            height: 36px;
+            background: #f7f5f2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #999;
+            margin-right: 16px;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .rank-item:nth-child(1) .rank-num {
+            background: #ffe8d6;
+            color: #ff6b35;
+        }
+        .rank-item:nth-child(2) .rank-num {
+            background: #fff0e0;
+            color: #e8923a;
+        }
+        .rank-item:nth-child(3) .rank-num {
+            background: #f5f0e8;
+            color: #b08a5a;
+        }
+        .rank-content {
+            flex: 1;
+        }
+        .rank-content h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        .rank-content p {
+            font-size: 13px;
+            color: #aaa;
+        }
+        .rank-hot {
+            font-size: 13px;
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        /* 双栏布局 */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .editor-pick {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+        .editor-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f7f5f2;
+        }
+        .editor-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .editor-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #ff6b35;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .editor-avatar.blue {
+            background: #4a90d9;
+        }
+        .editor-avatar.green {
+            background: #52b788;
+        }
+        .editor-avatar.orange {
+            background: #e8923a;
+        }
+        .editor-item h4 {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .editor-item p {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.5;
+        }
+        /* 用户投稿 */
+        .submit-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+            border: 1px dashed #e0d8d0;
+        }
+        .submit-section h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        .submit-section p {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+        .submit-input {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        .submit-input input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #eee;
+            border-radius: 30px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .submit-input input:focus {
+            border-color: #ff6b35;
+        }
+        /* FAQ 部分 */
+        .faq-section {
+            padding: 40px 0;
+        }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .faq-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #f0f0f0;
+        }
+        .faq-item h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+            color: #2b2b2b;
+        }
+        .faq-item p {
+            font-size: 14px;
+            color: #777;
+            line-height: 1.7;
+        }
+        /* 页脚 */
+        .footer {
+            background: #2b2b2b;
+            color: #aaa;
+            padding: 40px 0 30px;
+            margin-top: 40px;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-col h4 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .footer-col li:hover {
+            color: #ff6b35;
+        }
+        .footer-bottom {
+            border-top: 1px solid #3f3f3f;
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+        }
+        /* 响应式 */
+        @media (max-width: 992px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 56px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                gap: 20px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .submit-input {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 16px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .section-title h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <span class="logo-icon">💬</span> 吐槽网
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" class="nav-active">首页</a></li>
+                    <li><a href="#">热门吐槽</a></li>
+                    <li><a href="#">搞笑段子</a></li>
+                    <li><a href="#">生活趣事</a></li>
+                    <li><a href="#">神评论</a></li>
+                    <li><a href="#">排行榜</a></li>
+                </ul>
+            </nav>
+            <button class="nav-toggle" id="navToggle">☰</button>
+        </div>
+    </header>
+
+    <!-- 首屏 Hero -->
+    <section class="hero">
+        <h1>欢迎来到<span>吐槽网</span>，一起聊聊那些让人哭笑不得的事</h1>
+        <p>每天更新全网最热门的吐槽话题、搞笑段子和犀利神评论，这里是你放松心情、发现快乐的最佳去处！</p>
+        <div class="hero-actions">
+            <a href="#" class="btn-primary">🔥 看今日热门</a>
+            <a href="#" class="btn-outline">📝 我要投稿</a>
+        </div>
+        <div class="hot-tags">
+            <span class="hot-tag"># 上班摸鱼</span>
+            <span class="hot-tag"># 外卖奇遇</span>
+            <span class="hot-tag"># 网购翻车</span>
+            <span class="hot-tag"># 相亲现场</span>
+            <span class="hot-tag"># 室友迷惑行为</span>
+            <span class="hot-tag"># 老板画饼</span>
+        </div>
+    </section>
+
+    <!-- 主要区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 最新吐槽 -->
+            <section>
+                <div class="section-title">
+                    <h2>🔥 最新热门吐槽</h2>
+                    <a href="#" class="more-link">查看更多 ></a>
+                </div>
+                <div class="cards-grid">
+                    <article class="card">
+                        <div class="card-img">😅</div>
+                        <div class="card-body">
+                            <span class="card-tag">职场日常</span>
+                            <h3>开会两小时，重点五分钟</h3>
+                            <p>今天的会议从下午两点开到四点，老板讲了公司愿景、团队精神、未来规划……最后一句才是重点："这个月大家加把劲，目标翻倍！"</p>
+                            <div class="card-meta">
+                                <span>💬 328 评论</span>
+                                <span class="likes">👍 1.2k</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-img alt1">🍜</div>
+                        <div class="card-body">
+                            <span class="card-tag blue">生活趣事</span>
+                            <h3>外卖小哥的备注让我笑了一天</h3>
+                            <p>"不要葱，不要香菜，不要辣，不要米饭，不要餐具，只要一份寂寞。"小哥回复:"亲,建议直接点空气哦。"</p>
+                            <div class="card-meta">
+                                <span>💬 256 评论</span>
+                                <span class="likes">👍 986</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-img alt2">😤</div>
+                        <div class="card-body">
+                            <span class="card-tag green">网络热点</span>
+                            <h3>网购的"买家秀"和"卖家秀"差距能有多大？</h3>
+                            <p>模特图是超模气场,实物图是土味穿搭。评论区高赞:"这衣服穿在模特身上是时尚,穿我身上是时尚灾难。"</p>
+                            <div class="card-meta">
+                                <span>💬 412 评论</span>
+                                <span class="likes">👍 2.3k</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-img alt3">🏠</div>
+                        <div class="card-body">
+                            <span class="card-tag purple">室友日常</span>
+                            <h3>室友半夜两点用吸尘器,理由是"打扫卫生"</h3>
+                            <p>凌晨两点,室友突然开始吸尘。我问他为什么现在打扫,他说:"灵感来了,挡不住。"我:??? 你灵感是灰尘给的?</p>
+                            <div class="card-meta">
+                                <span>💬 189 评论</span>
+                                <span class="likes">👍 745</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-img">🚇</div>
+                        <div class="card-body">
+                            <span class="card-tag">公共交通</span>
+                            <h3>地铁上有人外放抖音,我该怎么办？</h3>
+                            <p>今天地铁遇到一位大姐外放短视频,声音巨大。旁边小哥忍无可忍,默默拿出耳机,然后调出同样的视频也外放,两人开始"斗音"。</p>
+                            <div class="card-meta">
+                                <span>💬 456 评论</span>
+                                <span class="likes">👍 1.8k</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-img alt1">💑</div>
+                        <div class="card-body">
+                            <span class="card-tag blue">相亲现场</span>
+                            <h3>相亲对象问我月薪,我报了税后,她说"你太虚了"</h3>
+                            <p>相亲对象问我月薪多少,我如实说了税后。她说:"你这也太虚了吧,别人都报税前加年终奖。"我:??? 那我该报多少?</p>
+                            <div class="card-meta">
+                                <span>💬 298 评论</span>
+                                <span class="likes">👍 1.5k</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- 双栏布局: 神评论和排行榜 -->
+            <div class="two-col">
+                <div class="editor-pick">
+                    <div class="section-title">
+                        <h2>💡 本周神评论</h2>
+                    </div>
+                    <div class="editor-item">
+                        <div class="editor-avatar">王</div>
+                        <div>
+                            <h4>网友"不吃香菜"</h4>
+                            <p>"老板说年轻人要懂得付出,我问他工资能不能也付出一下,他沉默了。" —— 获赞 3.2k</p>
+                        </div>
+                    </div>
+                    <div class="editor-item">
+                        <div class="editor-avatar blue">李</div>
+                        <div>
+                            <h4>网友"摸鱼大师"</h4>
+                            <p>"今天工作没做完,不是我不努力,是工位太舒服了,一坐下就想睡觉。" —— 获赞 2.8k</p>
+                        </div>
+                    </div>
+                    <div class="editor-item">
+                        <div class="editor-avatar green">赵</div>
+                        <div>
+                            <h4>网友"干饭魂"</h4>
+                            <p>"减肥第一天:早上吃草,中午吃草,晚上实在忍不住了,点了炸鸡。减肥宣告失败,用时12小时。" —— 获赞 2.1k</p>
+                        </div>
+                    </div>
+                    <div class="editor-item">
+                        <div class="editor-avatar orange">陈</div>
+                        <div>
+                            <h4>网友"追剧狂魔"</h4>
+                            <p>"追了三年的剧终于大结局了,感觉像失恋了一样。以后周三晚上不知道干什么了。" —— 获赞 1.9k</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rank-list">
+                    <div class="section-title">
+                        <h2>🏆 热议排行榜</h2>
+                    </div>
+                    <div class="rank-item">
+                        <div class="rank-num">1</div>
+                        <div class="rank-content">
+                            <h4>公司新来的实习生把老板叫"哥"</h4>
+                            <p>网友:这孩子是懂职场生存的</p>
+                        </div>
+                        <span class="rank-hot">🔥 5.6w</span>
+                    </div>
+                    <div class="rank-item">
+                        <div class="rank-num">2</div>
+                        <div class="rank-content">
+                            <h4>妈妈做的"黑暗料理"又创新高了</h4>
+                            <p>网友:这是碳基生物能做出的菜吗?</p>
+                        </div>
+                        <span class="rank-hot">🔥 4.8w</span>
+                    </div>
+                    <div class="rank-item">
+                        <div class="rank-num">3</div>
+                        <div class="rank-content">
+                            <h4>健身房办卡后,我选择了"躺平"</h4>
+                            <p>网友:办卡是健身的第一步,也是最后一步</p>
+                        </div>
+                        <span class="rank-hot">🔥 3.9w</span>
+                    </div>
+                    <div class="rank-item">
+                        <div class="rank-num">4</div>
+                        <div class="rank-content">
+                            <h4>手机内存又满了,到底是谁的错？</h4>
+                            <p>网友:微信一个app,占了半壁江山</p>
+                        </div>
+                        <span class="rank-hot">🔥 3.2w</span>
+                    </div>
+                    <div class="rank-item">
+                        <div class="rank-num">5</div>
+                        <div class="rank-content">
+                            <h4>相亲对象带妈妈一起来是几个意思？</h4>
+                            <p>网友:这是组团考察你来了</p>
+                        </div>
+                        <span class="rank-hot">🔥 2.7w</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分类浏览 -->
+            <section class="category-section">
+                <div class="section-title">
+                    <h2>📂 按分类找乐子</h2>
+                </div>
+                <div class="category-nav">
+                    <span class="category-item active">全部</span>
+                    <span class="category-item">职场那些事</span>
+                    <span class="category-item">校园生活</span>
+                    <span class="category-item">家庭趣事</span>
+                    <span class="category-item">恋爱奇葩说</span>
+                    <span class="category-item">网络冲浪</span>
+                    <span class="category-item">日常沙雕</span>
+                    <span class="category-item">社会观察</span>
+                </div>
+                <p style="color:#aaa; font-size:14px; text-align:center; padding: 20px;">点击分类标签,发现更多你感兴趣的吐槽话题~</p>
+            </section>
+
+            <!-- 用户投稿 -->
+            <section class="submit-section">
+                <h2>✍️ 你也有想吐槽的事？</h2>
+                <p>分享你的奇葩经历、日常迷惑行为,让更多人一起"哈哈哈哈"</p>
+                <div class="submit-input">
+                    <input type="text" placeholder="写下你想吐槽的内容...">
+                    <a href="#" class="btn-primary" style="white-space: nowrap;">立即发布</a>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section class="faq-section">
+                <div class="section-title">
+                    <h2>❓ 关于吐槽网,你可能想知道</h2>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>吐槽网是什么？</h3>
+                        <p>吐槽网是一个轻松有趣的网络社区,用户在这里分享生活中的搞笑瞬间、奇葩经历和犀利吐槽。我们相信,生活中的很多烦恼,说出来、笑一笑,就过去了。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>如何发布我的吐槽？</h3>
+                        <p>点击页面上的"我要投稿"按钮,或者在上方的投稿框中输入内容后点击"立即发布"即可。你还可以添加话题标签,让更多人看到你的内容。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>内容有什么要求吗？</h3>
+                        <p>只要是真实、有趣、符合法律法规的内容都可以发布。我们鼓励原创和真实分享,不建议搬运他人内容。同时请尊重他人,避免人身攻击。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>为什么我的内容没有通过审核？</h3>
+                        <p>如果内容涉及敏感话题、广告营销、人身攻击或违反法律法规,可能无法通过审核。请修改后重新提交,或者联系我们的管理员了解详情。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-col">
+                    <h4>吐槽网</h4>
+                    <ul>
+                        <li>关于我们</li>
+                        <li>联系方式</li>
+                        <li>广告合作</li>
+                        <li>用户协议</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>热门栏目</h4>
+                    <ul>
+                        <li>职场吐槽</li>
+                        <li>生活趣事</li>
+                        <li>网络热点</li>
+                        <li>神评论合集</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li>段子手之家</li>
+                        <li>搞笑图片站</li>
+                        <li>幽默视频</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li>微信公众号</li>
+                        <li>新浪微博</li>
+                        <li>抖音号</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2024 吐槽网 TuCaoWang.com  |  每天开心一点点,生活更美好~
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端导航切换
+        document.getElementById('navToggle').addEventListener('click', function() {
+            var navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        });
+
+        // 分类标签点击效果
+        var categoryItems = document.querySelectorAll('.category-item');
+        categoryItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                categoryItems.forEach(function(i) {
+                    i.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // 热门标签点击效果
+        var hotTags = document.querySelectorAll('.hot-tag');
+        hotTags.forEach(function(tag) {
+            tag.addEventListener('click', function() {
+                this.style.backgroundColor = '#ff6b35';
+                this.style.color = '#fff';
+            });
+        });
+    </script>
+</body>
+  </html>
